@@ -1,0 +1,6 @@
+NOTES.md~
+.gitignore~
+.htaccess~
+init/db.sql~
+inc/*~
+data/db.db

@@ -1,0 +1,10 @@
+DirectoryIndex index.php
+
+<FilesMatch "~">
+Allow from all
+</FilesMatch>
+
+<FilesMatch ".*\.db$">
+Allow from all
+</FilesMatch>
+
