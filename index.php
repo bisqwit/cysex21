@@ -15,7 +15,7 @@ require_once 'inc/data.php';
 
 function make_password($p)
 {
-  return $p; // Use plaintext passwords for ease of debugging
+  #return $p; // Use plaintext passwords for ease of debugging
   global $db;
   $salt = dbquery('select value from settings where name=?', 'salt')->fetchArray()[0];
   $salt0 = 'xx';
@@ -75,7 +75,7 @@ switch(@$_GET['op'])
       $link  = "?op=read&id={$post['id']}";
       $title = $post['title'];
       print "<li>";
-      print "<a href='$link'>$title</a>";
+      print "<a href='$link'>".htmlspecialchars($title)."</a>";
       if($u['id'] == $_SESSION['userid']) print " <button onclick='del({$post['id']},{$u['id']})'>Delete</button> ";
       print '</li>';
     }
@@ -84,6 +84,8 @@ switch(@$_GET['op'])
   case 'del':
     $post = FindPost($_POST['id']);
     if(!$post) { print '<h2>Post does not exist.</h2>'; break; }
+    if(!@$_SESSION['userid']
+    || $_SESSION['userid'] != $post['userid']) { header('HTTP/1.0 403 ACCESS DENIED'); exit; }
     DeletePost($_POST['id']);
     print '<h2>Post deleted</h2>';
     $_GET['uid'] = $_POST['uid'];
@@ -94,8 +96,8 @@ switch(@$_GET['op'])
     print '<section style="border:1px solid black">';
     echo 'Posted at: ', $post['posttime'], '<br>';
     print '<details>';
-     echo '<summary>', $post['title'], '</summary>';
-     echo '<p>',       $post['content'], '</p>';
+     echo '<summary>', htmlspecialchars($post['title']), '</summary>';
+     echo '<p>',       htmlspecialchars($post['content']), '</p>';
     print '</details>';
     print '</section>';
     goto selus;

@@ -1,10 +1,14 @@
 DirectoryIndex index.php
 
 <FilesMatch "~">
-Allow from all
+Deny from all
 </FilesMatch>
 
 <FilesMatch ".*\.db$">
-Allow from all
+Deny from all
+</FilesMatch>
+
+<FilesMatch ".*\.sql$">
+Deny from all
 </FilesMatch>
 

@@ -9,7 +9,7 @@ function UserCount()
 }
 function FindUser($u,$p)
 {
-  return dbquery("select * from users where name='$u' and password='$p'")->fetchArray();
+  return dbquery('select * from users where name=? and password=?', [$u,$p])->fetchArray();
 }
 function FindUserById($u)
 {
